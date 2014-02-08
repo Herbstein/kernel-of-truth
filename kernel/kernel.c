@@ -17,16 +17,20 @@
 #if !defined(__i386__)
 #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
- 
- 
-void kernel_main()
+
+void init_i586()
 {
 	gdt_install();
 	idt_install();
 	isrs_install();
+	irq_install();
+	//Allow Interrupt Requests.
+	__asm__ __volatile__ ("sti"); 
+} 
+ 
+void kernel_main()
+{
+	init_i586();
 	term_initialize();
-	term_writestring("Interrupt?");
-	kassert(0 == 0);
-	isr0();
 	term_writestring("Hello, Kernel!");
 }

@@ -33,4 +33,5 @@ void kernel_main()
 	init_i586();
 	term_initialize();
 	term_writestring("Hello, Kernel!");
+	for(;;);
 }

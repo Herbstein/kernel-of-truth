@@ -18,7 +18,7 @@ struct idt_entry
 {
 	ushort base_lo;
 	ushort sel; // Kernel segment goes here.
-	ushort always0; 
+	uchar always0;
 	uchar flags; //Set using the table.
 	ushort base_hi;
 }__attribute((packed));

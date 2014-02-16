@@ -15,7 +15,6 @@ kernel: terminal gdt-i586 idt-i586 isr-i586 irq-i586 tmem build
 	${CC} -c kernel/kabort.c -o build/kabort.o  ${CFLAGS}
 
 link-i586: build
-	#${CC} -T kernel/arch/i586/linker.ld -o build/truthos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o build/terminal.o build/gdt.o build/idt.o build/isr.o build/gdtc.o build/isrc.o build/idtc.o build/tmem.o build/kabort.o build/kassert.o build/kputs.o build-lgcc
 	${CC} -T kernel/arch/i586/linker.ld -o build/truthos.bin -ffreestanding -O2 -nostdlib build/*.o -lgcc
 
 terminal: build
@@ -45,6 +44,12 @@ tmem: build
 
 start:
 	qemu-system-i386 -kernel build/truthos.bin
+
+start-log:
+	qemu-system-i386 -kernel build/truthos.bin -d in_asm,cpu_reset,exec -no-reboot 2> qemu.log
+
+start-debug:
+	qemu-system-i386 -S -s -kernel build/truthos.bin
 
 build:
 	mkdir build

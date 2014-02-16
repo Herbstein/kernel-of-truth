@@ -1,4 +1,5 @@
-
+#ifndef REGISTERS_H
+#define REGISTERS_H
 /* This defines what the stack looks like after an ISR was running */
 struct regs
 {
@@ -7,3 +8,5 @@ struct regs
     unsigned int int_no, err_code;    /* our 'push byte #' and ecodes do this */
     unsigned int eip, cs, eflags, useresp, ss;   /* pushed by the processor automatically */ 
 };
+
+#endif

@@ -1,5 +1,11 @@
 #include "irq.h"
 
+void *irq_routines[16] =
+{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0
+};
+
 
 void irq_install()
 {

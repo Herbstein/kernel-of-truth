@@ -3,6 +3,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "isr.h"
+#include "irq.h"
 #include "terminal.h"
 #include "kabort.h"
 #include "kassert.h"

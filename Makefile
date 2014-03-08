@@ -1,14 +1,14 @@
 TEST_CC=clang
 CC=../bin/bin/i586-elf-gcc
 AS=../bin/bin/i586-elf-as
-CFLAGS= -std=c99 -ffreestanding -O2 -Wall -Wextra
+CFLAGS= -std=c99 -ffreestanding -O0 -Wall -Wextra -g
 
 all: bootloader-i586 kernel link-i586 
 
 bootloader-i586: build
 	${AS} kernel/arch/i586/boot.s -o build/boot.o
 
-kernel: terminal gdt-i586 idt-i586 isr-i586 irq-i586 tmem build
+kernel: terminal keyboard timer gdt-i586 idt-i586 isr-i586 irq-i586 tmem build
 	${CC} -c kernel/kernel.c -o build/kernel.o  ${CFLAGS}
 	${CC} -c kernel/kassert.c -o build/kassert.o  ${CFLAGS}
 	${CC} -c kernel/kputs.c -o build/kputs.o  ${CFLAGS}
@@ -42,14 +42,28 @@ io-i586: build
 tmem: build
 	${CC} -c tlibc/tmem/mem.c -o build/tmem.o ${CFLAGS}
 
+keyboard: build
+	${CC} -c kernel/drivers/keyboard.c -o build/kerboard.o ${CFLAGS}
+
+timer: build
+	${CC} -c kernel/drivers/pit.c -o build/pit.o ${CFLAGS}
+
 start:
 	qemu-system-i386 -kernel build/truthos.bin
 
 start-log:
-	qemu-system-i386 -kernel build/truthos.bin -d in_asm,cpu_reset,exec -no-reboot 2> qemu.log
+	qemu-system-i386 -kernel build/truthos.bin -d in_asm,cpu_reset,exec,int,op,guest_errors,pcall -no-reboot 2> qemu.log
 
 start-debug:
 	qemu-system-i386 -S -s -kernel build/truthos.bin
+
+debug-asm: add-asm-flag 
+	@echo ${CFLAGS}
+#kernel
+
+add-asm-flag:
+	${CFLAGS} += -S
+	@echo ${CFLAGS}
 
 build:
 	mkdir build

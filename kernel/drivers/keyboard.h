@@ -5,7 +5,6 @@
 #include "../irq.h"
 #include "../registers.h"
 #include "../terminal.h"
-#include "../irq.h"
 
 //This array represents the scancodes for the QWERTY layout
 extern unsigned char qwerty[128];

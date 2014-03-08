@@ -26,14 +26,17 @@ void irq_install()
 	idt_set_gate(45, (unsigned)irq13, 0x08, 0x8E);
 	idt_set_gate(46, (unsigned)irq14, 0x08, 0x8E);
 	idt_set_gate(47, (unsigned)irq15, 0x08, 0x8E);
+}
 
-
+void irq_install_handler(int irq, void (*handler)(struct regs *r))
+{
+	irq_routines[irq] = handler;
 }
 
 /* This clears the handler for a given IRQ */
 void irq_uninstall_handler(int irq)
 {
-    irq_routines[irq] = 0;
+	irq_routines[irq] = 0;
 }
 
 /* Normally, IRQs 0 to 7 are mapped to entries 8 to 15. This

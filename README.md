@@ -44,6 +44,15 @@ Put the linker, assembler, and gcc binaries in `../bin/bin/`, relative to
 the Makefile. Alternately, change lines 2 and 3 of the Makefile to point
 to your binaries.
 
+Issues:
+-------
+
+[ ] When compiling with `-O0` optimization, the kernel coredumps in 
+`gdt_flush()`  
+[ ] Install additional ISRs (16-255) in isr.c. Consider adding assembly
+generating scripts to the repo.
+[ ] Look at how Linux implements interrupts.
+
 To Do:
 ------
 * Get stdio working. I can print to the terminal using `term_putchar()`,

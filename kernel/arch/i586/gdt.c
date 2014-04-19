@@ -1,6 +1,7 @@
 #include "gdt.h"
 
-GDT_t create_gdt_record(uint32_t base, uint32_t limit, uint8_t access_byte, uint8_t flags)
+GDT_t create_gdt_record(uint32_t base, uint32_t limit, uint8_t access_byte,
+                        uint8_t flags)
 {
     GDT_t gdt_record = 0;
     GDT_t buffer;
@@ -19,16 +20,17 @@ GDT_t create_gdt_record(uint32_t base, uint32_t limit, uint8_t access_byte, uint
 
 void set_up_gdt()
 {
-    
     GDT_t gdt[3];
     // Null descriptor - will never be used by processor
     gdt[0] = create_gdt_record(0,0,0,0);
-    // Code segment, theoretically, really the flags are set to allow anything
-    gdt[1] = create_gdt_record(0, 0xffffffff, 0xff, 0xff); 
-    // Data segment, theoretically, really the flags are set to allow anything
-    gdt[2] = create_gdt_record(0, 0xffffffff, 0xff, 0xff);
+    // Code segment
+    gdt[1] = create_gdt_record(0, 0xffffffff, 0x9a, 5); 
+    // Data segment
+    gdt[2] = create_gdt_record(0, 0xffffffff, 0x92, 5);
+    // Make the gdt_ptr be the address of the array
     gdt_ptr->table_start = gdt;
-    gdt_ptr->table_size = 3 * 64 - 1;
+    // The size is the size of the table minus 1
+    gdt_ptr->table_size = 3 * sizeof(GDT_t) - 1;
     enter_protected_mode();
 }
 

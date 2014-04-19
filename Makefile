@@ -1,6 +1,6 @@
 TEST_CC=clang
-CC=../bin/bin/i586-elf-gcc
-AS=../bin/bin/i586-elf-as
+CC=../cross/bin/i586-elf-gcc
+AS=../cross/bin/i586-elf-as
 CFLAGS= -std=c99 -ffreestanding -O0 -Wall -Wextra -g
 
 all: bootloader-i586 kernel link-i586 

@@ -40,7 +40,7 @@ Building:
 ---------
 Follow the instructions on the OSDev wiki [Bare Bones Tutorial][0]. You
 will need to build a GCC crosscompiler and binutils for the i586 architecure.
-Put the linker, assembler, and gcc binaries in `../bin/bin/`, relative to 
+Put the linker, assembler, and gcc binaries in `../cross/bin/`, relative to 
 the Makefile. Alternately, change lines 2 and 3 of the Makefile to point
 to your binaries.
 
@@ -53,9 +53,9 @@ Look at the following files:
 	* kernel/terminal.h  
 	* tlibc/stdio/stdio.c  
 	* tlibc/stdio/stdio.h   
-- [ ] Implement the following interrupt tables:  
-	- [ ] GDT  
-	- [ ] IDT  
+- [-] Implement the following interrupt tables:  
+	- [x] GDT  
+	- [-] IDT  
 	- [ ] ISRs  
 - [ ] Write a memory manager to use `malloc` and `free`. 
 - [ ]  Write a keyboard driver, so I can type on the screen.
